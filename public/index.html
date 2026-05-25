@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mano do SOC &mdash; Agente de Cyber Defense</title>
+    <meta
+      name="description"
+      content="Mano do SOC: agente de seguran&ccedil;a da informa&ccedil;&atilde;o para triagem SOC, threat hunting e resposta a incidentes."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+            colors: {
+              obsidian: "#0B0D10",
+              graphite: "#111318",
+              panel: "#181B20",
+              panelSoft: "#1F232A",
+              panelLift: "#242832",
+              line: "rgba(230,232,235,0.1)",
+              ink: "#E6E8EB",
+              muted: "#9CA3AF",
+              accent: "#7AA2C7",
+              cyanLow: "#63B3C7",
+              violetLow: "#7C6A9E",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="min-h-screen bg-obsidian font-sans text-ink antialiased">
+    <div class="app-shell">
+      <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+      <aside id="sidebarPanel" class="sidebar-panel" aria-label="Contexto operacional do agente">
+        <div class="sidebar-inner">
+
+          <div class="brand-row">
+            <div class="brand-lockup">
+              <div class="agent-mark" aria-hidden="true">
+                <i data-lucide="scan-eye" class="h-5 w-5"></i>
+              </div>
+              <div class="min-w-0">
+                <p class="truncate text-sm font-semibold text-ink">Mano do SOC</p>
+                <p class="truncate text-xs text-muted">Agente de Cyber Defense</p>
+              </div>
+            </div>
+            <button class="mobile-close" id="closeSidebarButton" type="button" aria-label="Fechar painel lateral">
+              <i data-lucide="x" class="h-4 w-4"></i>
+            </button>
+          </div>
+
+          <div class="agent-identity">
+            <div class="identity-header">
+              <h1 class="agent-name">Mano do SOC</h1>
+              <span class="status-chip">
+                <span class="status-dot"></span>
+                No plant&atilde;o
+              </span>
+            </div>
+            <p class="identity-desc">
+              Analista de SOC experiente, direto e pr&aacute;tico. Triagem, hunting, resposta a incidentes e vis&atilde;o de quem vive a correria do Blue Team.
+            </p>
+          </div>
+
+          <section class="sidebar-section">
+            <div class="section-heading">
+              <i data-lucide="zap" class="h-4 w-4"></i>
+              <h2>Pra come&ccedil;ar</h2>
+            </div>
+            <div class="sidebar-suggestions" id="suggestions">
+              <button
+                class="suggestion-button"
+                type="button"
+                data-prompt="Se liga nesse comando e me diz se tem cara de coisa ruim. Quero saber o risco, o que coletar de evidencia e qual o proximo passo:&#10;&#10;powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand &lt;cole_aqui&gt;"
+              >
+                <span>Analisar comando suspeito</span>
+                <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+              </button>
+              <button
+                class="suggestion-button"
+                type="button"
+                data-prompt="Cola esse alerta de XDR pra mim fazer a triagem. Quero entender as entidades envolvidas, possivel tecnica MITRE ATT&amp;CK e a decisao recomendada:&#10;&#10;&lt;cole_o_alerta_aqui&gt;"
+              >
+                <span>Triagem de alerta XDR / SIEM</span>
+                <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+              </button>
+              <button
+                class="suggestion-button"
+                type="button"
+                data-prompt="Monta um plano de resposta a incidente pra esse cenario, separando contencao, erradicacao, recuperacao e comunicacao:&#10;&#10;&lt;descreva_o_cenario&gt;"
+              >
+                <span>Montar plano de resposta a incidente</span>
+                <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+              </button>
+              <button
+                class="suggestion-button"
+                type="button"
+                data-prompt="Classifica esse IOC pra mim, sugere enriquecimentos e mostra como procurar atividade relacionada no ambiente:&#10;&#10;&lt;cole_o_IOC_aqui&gt;"
+              >
+                <span>Classificar IOC / observable</span>
+                <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+              </button>
+              <button
+                class="suggestion-button"
+                type="button"
+                data-prompt="Me explica o que e lateral movement com visao pratica de SOC. Como detectar, o que olhar nos logs e como responder."
+              >
+                <span>Explicar conceito de seguran&ccedil;a</span>
+                <i data-lucide="arrow-up-right" class="h-4 w-4"></i>
+              </button>
+            </div>
+          </section>
+
+          <div class="sidebar-footer">
+            <i data-lucide="shield-check" class="h-3.5 w-3.5"></i>
+            <span>Chave da API fica no servidor &mdash; papo seguro</span>
+          </div>
+
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="chat-header">
+          <div class="header-container">
+            <div class="header-left">
+              <button
+                class="sidebar-toggle"
+                id="openSidebarButton"
+                type="button"
+                aria-label="Abrir painel lateral"
+                aria-controls="sidebarPanel"
+                aria-expanded="false"
+              >
+                <i data-lucide="panel-left-open" class="h-5 w-5"></i>
+              </button>
+              <div class="header-icon" aria-hidden="true">
+                <i data-lucide="scan-eye" class="h-5 w-5"></i>
+              </div>
+              <div class="header-copy">
+                <div class="header-title-row">
+                  <h2>Mano do SOC</h2>
+                  <span class="online-badge">
+                    <span class="pulse-dot"></span>
+                    No plant&atilde;o
+                  </span>
+                </div>
+                <p>SOC, Blue Team e Threat Hunting &mdash; papo reto, sem enrola&ccedil;&atilde;o.</p>
+              </div>
+            </div>
+
+            <div class="header-actions">
+              <span class="proxy-pill">
+                <i data-lucide="shield-check" class="h-4 w-4"></i>
+                Conex&atilde;o segura
+              </span>
+              <button class="action-button" type="button" id="clearChatButton" aria-label="Limpar conversa">
+                <i data-lucide="trash-2" class="h-4 w-4"></i>
+                <span>Limpar</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <section class="conversation-shell">
+          <div class="conversation-container">
+            <section id="emptyState" class="empty-state" aria-label="Estado inicial do console">
+              <div class="empty-kicker">
+                <span class="status-dot"></span>
+                Agente no plant&atilde;o &middot; SOC &middot; Blue Team &middot; Hunting
+              </div>
+              <h3>E a&iacute;, o que voc&ecirc; precisa investigar?</h3>
+              <p>
+                Cola um alerta, comando, IOC, log ou cen&aacute;rio. Eu trato com vis&atilde;o de SOC
+                &mdash; contexto t&eacute;cnico, direto ao ponto, sem caô.
+              </p>
+
+              <div class="readiness-strip" aria-label="Status da sessao">
+                <div>
+                  <span>Agente</span>
+                  <strong>No plant&atilde;o</strong>
+                </div>
+                <div>
+                  <span>Escopo</span>
+                  <strong>SOC &middot; IR &middot; Hunting</strong>
+                </div>
+                <div>
+                  <span>Modelo</span>
+                  <strong>GPT-4.1 Mini</strong>
+                </div>
+              </div>
+
+              <div class="prompt-grid" id="emptySuggestions">
+                <button
+                  class="prompt-card"
+                  type="button"
+                  data-prompt="Se liga nesse comando e me diz se tem cara de coisa ruim. Quero saber o risco, o que coletar de evidencia e qual o proximo passo:&#10;&#10;powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand &lt;cole_aqui&gt;"
+                >
+                  <span class="prompt-icon"><i data-lucide="square-terminal" class="h-5 w-5"></i></span>
+                  <strong>Comando suspeito</strong>
+                  <small>Analise risco, evid&ecirc;ncias e pr&oacute;ximos passos.</small>
+                </button>
+                <button
+                  class="prompt-card"
+                  type="button"
+                  data-prompt="Cola esse alerta de XDR pra mim fazer a triagem. Quero entender as entidades envolvidas, possivel tecnica MITRE ATT&amp;CK e a decisao recomendada:&#10;&#10;&lt;cole_o_alerta_aqui&gt;"
+                >
+                  <span class="prompt-icon"><i data-lucide="siren" class="h-5 w-5"></i></span>
+                  <strong>Triagem de alerta</strong>
+                  <small>Entidades, ATT&amp;CK e decis&atilde;o de triagem.</small>
+                </button>
+                <button
+                  class="prompt-card"
+                  type="button"
+                  data-prompt="Monta um plano de resposta a incidente pra esse cenario, separando contencao, erradicacao, recuperacao e comunicacao:&#10;&#10;&lt;descreva_o_cenario&gt;"
+                >
+                  <span class="prompt-icon"><i data-lucide="list-checks" class="h-5 w-5"></i></span>
+                  <strong>Resposta a incidente</strong>
+                  <small>Conten&ccedil;&atilde;o, erradica&ccedil;&atilde;o e recupera&ccedil;&atilde;o.</small>
+                </button>
+                <button
+                  class="prompt-card"
+                  type="button"
+                  data-prompt="Classifica esse IOC pra mim, sugere enriquecimentos e mostra como procurar atividade relacionada no ambiente:&#10;&#10;&lt;cole_o_IOC_aqui&gt;"
+                >
+                  <span class="prompt-icon"><i data-lucide="crosshair" class="h-5 w-5"></i></span>
+                  <strong>IOC / Observable</strong>
+                  <small>Classifica&ccedil;&atilde;o, enriquecimento e pivots.</small>
+                </button>
+              </div>
+            </section>
+
+            <div id="messages" class="messages-container" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <footer class="composer-shell">
+          <form id="chatForm" class="composer-container">
+            <div class="composer">
+              <div class="composer-prefix" aria-hidden="true">
+                <i data-lucide="terminal" class="h-5 w-5"></i>
+              </div>
+              <textarea
+                id="messageInput"
+                rows="1"
+                placeholder="Cola o alerta, comando, IOC ou log aqui..."
+                aria-label="Mensagem para o agente"
+              ></textarea>
+              <button id="sendButton" class="send-button" type="submit" aria-label="Enviar mensagem">
+                <span>Enviar</span>
+                <i data-lucide="send-horizontal" class="h-5 w-5"></i>
+              </button>
+            </div>
+            <div class="composer-help">
+              <span>Enter pra enviar &middot; Shift + Enter pra nova linha</span>
+              <span id="processingState" class="processing-state">Pronto pra receber.</span>
+            </div>
+          </form>
+        </footer>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

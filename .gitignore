@@ -1,0 +1,20 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# System prompt (contém instruções sensíveis do agente)
+system-prompt.txt
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+.claude
+vercel.json
